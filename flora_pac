@@ -46,6 +46,18 @@ function FindProxyForURL(url, host) {
     strLines = strLines + """
     ];
 
+    //add academicDomains
+    var academicDomains = {
+        "cqvip.com":1,
+        "springer.com":1,
+        "aps.org":1,
+        "royalsocietypublishing.org":1,
+        "link.springer.com":1,
+        "iop.org":1,
+        "nature.com":1,
+        "sciencedirect.com":1,
+    }
+
     var safeDomains = {
         '10010.com' : 1,
         '115.com' : 1,
@@ -560,6 +572,11 @@ function FindProxyForURL(url, host) {
         }
     }
 
+    //fix error message in FoxyProxy when switching tabs. http://verihy.me/posts/foxyproxy-pac/
+    if (typeof host === "undefined") {
+        return 'DIRECT';
+    }
+
     if (isPlainHostName(host)
      || host === '127.0.0.1'
      || host === 'localhost') {
@@ -567,6 +584,11 @@ function FindProxyForURL(url, host) {
     }
 
     if (testDomain(host, safeDomains, true)) {
+        return 'DIRECT';
+    }
+
+    //add academicDomains
+    if (testDomain(host, academicDomains, true)) {
         return 'DIRECT';
     }
 
