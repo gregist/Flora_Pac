@@ -1,4 +1,6 @@
-*.sh
-*.php
-*.pac
+*
+!.gitignore
+!LICENSE
+!*.md
+!flora_pac
 .DS_Store
