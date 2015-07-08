@@ -1199,6 +1199,7 @@ function FindProxyForURL(url, host) {
         [2792292352, 4294901760],
         [2810904576, 4294901760],
         [2814181376, 4294901760],
+        [2816212992, 4294901760],
         [2829058048, 4294901760],
         [2869428224, 4294443008],
         [2871132160, 4294836224],
@@ -2228,7 +2229,12 @@ function FindProxyForURL(url, host) {
         'yyets.com' : 1,
         'tw.yahoo.com' : 1,
         'youtube.com' : 1,
-        'zaobao.com.sg' : 1
+        'zaobao.com.sg' : 1,
+        //add mine
+        'github.com':1,
+        'github.io':1,
+        'wikipedia.org':1,
+        'zh.wikipedia.org':1,
     };
 
     // see https://github.com/clowwindy/ChinaDNS/blob/master/chinadns/dnsrelay.py
@@ -2311,7 +2317,7 @@ function FindProxyForURL(url, host) {
         16402 : 1
     };
 
-    var proxy = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080';
+    var proxy = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;';
 
     function convertAddress(ipchars) {
         var bytes = ipchars.split('.');

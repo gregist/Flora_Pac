@@ -437,7 +437,12 @@ function FindProxyForURL(url, host) {
         'yyets.com' : 1,
         'tw.yahoo.com' : 1,
         'youtube.com' : 1,
-        'zaobao.com.sg' : 1
+        'zaobao.com.sg' : 1,
+        //add mine
+        'github.com':1,
+        'github.io':1,
+        'wikipedia.org':1,
+        'zh.wikipedia.org':1,
     };
 
     // see https://github.com/clowwindy/ChinaDNS/blob/master/chinadns/dnsrelay.py
@@ -690,7 +695,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Generate proxy auto-config rules.")
     parser.add_argument('-x', '--proxy',
                         dest    = 'proxy',
-                        default = 'SOCKS5 127.0.0.1:8964; SOCKS 127.0.0.1:8964; DIRECT',
+                        default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;',
                         nargs   = '?',
                         help    = "Proxy Server, examples: "
                                   "SOCKS5 127.0.0.1:8964; "
