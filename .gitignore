@@ -1,2 +1,4 @@
-.pac
+*.sh
+*.php
+*.pac
 .DS_Store
