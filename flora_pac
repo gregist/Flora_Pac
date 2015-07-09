@@ -94,6 +94,7 @@ function FindProxyForURL(url, host) {
         "192.168.*",
     ];
 
+    //costomDangerDomains
     var costomDangerDomains = [
         //just to be sure
         'github.com',
@@ -642,7 +643,7 @@ function FindProxyForURL(url, host) {
 
     //add costomDangerDomains
     if (doMatch(url,costomDangerDomains)) {
-        return 'proxy';
+        return proxy;
     }
 
     if (testDomain(host, safeDomains, true)) {
