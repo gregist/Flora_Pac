@@ -4,13 +4,13 @@ This script generates a PAC file that helps you circumvent the [GFW](https://en.
 
 ## Mechanism
 
-* `safeDomains` || `academicDomains` -> `DIRECT`
-* `dangerDomains` -> `proxy`
+* `costomSafeDomains` or `safeDomains` -> `DIRECT`
+* `costomDangerDomains` or `dangerDomains` -> `proxy`
 * `safePorts` -> `DIRECT`
-* dnsResolve(host)
+* `dnsResolve(host)`
   * failed -> `proxy`
-  * in `fake_Ips` -> `proxy` 
-  * in cn ip `list` -> `DIRECT`
+  * in `fakeIps` -> `proxy` 
+  * in `cn_ip_list` -> `DIRECT`
 * else -> `proxy`
 
 ## Usage
