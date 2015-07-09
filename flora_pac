@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Flora_Pac by @leaskh
-# www.leaskh.com, i@leaskh.com
-# Based on chnroutes project (by Numb.Majority@gmail.com)
+# a fork by @gregist
+# under the MIT License
 
 import re
 import urllib2
@@ -30,12 +30,78 @@ def generate_pac(proxy):
 
     results = sorted(results, key = ip)
 
-    strLines = """// Flora_Pac by @leaskh
-// www.leaskh.com, i@leaskh.com
+    strLines = """// a fork of @leaskh's Flora_Pac by @gregist
+// many lines were borrowed from http://www.oschina.net/code/snippet_860270_26154
+// feel free to modify & distribute
+
+function getDomain(url) {
+    if (url.substring(0, 8) == 'file:///') {
+        return url;
+    } else if (url.substring(0, 7) == 'http://') {
+        url = url.substring(7);
+    } else if (url.substring(0, 8) == 'https://') {
+        url = url.substring(8);
+    }
+    var slashIndex = url.indexOf("/");
+    if (slashIndex != -1) {
+        url = url.substring(0, slashIndex);
+    }
+    return url;
+}
+
+function matchDomains(url, pattern) {
+    var domain = getDomain(url);
+    return shExpMatch(domain, pattern) || shExpMatch(domain, "*." + pattern);
+}
+
+function matchUrls(url, pattern) {
+    return shExpMatch(url, pattern);
+}
+
+function isURL(pattern) {
+    return pattern.substring(0, 7) == 'http://' ||
+           pattern.substring(0, 8) == 'https://';
+}
+
+function doMatch(url, patternList) {
+    for (var i = 0; i < patternList.length; i++) {
+        var pattern = patternList[i];
+        if (pattern == '') {
+            continue;
+        }
+        if (isURL(pattern) && matchUrls(url, pattern)) {
+            return true;
+        } else if (matchDomains(url, pattern)) {
+            return true;
+        }
+    }
+}
 
 function FindProxyForURL(url, host) {
 
-    var list = ["""
+    //costomSafeDomains
+    var costomSafeDomains = [
+        //academic full-text
+        "cqvip.com",
+        "springer.com",
+        "aps.org",
+        "royalsocietypublishing.org",
+        "springer.com",
+        "iop.org",
+        "nature.com",
+        "sciencedirect.com",
+        //local network
+        "192.168.*",
+    ];
+
+    var costomDangerDomains = [
+        //just to be sure
+        'github.com',
+        'github.io',
+        'wikipedia.org',
+    ]
+
+    var cn_ip_list = ["""
     intLines = 0
     for ip,mask,_ in results:
         if intLines > 0:
@@ -45,18 +111,6 @@ function FindProxyForURL(url, host) {
         [%d, %d]"""%(ip, mask)
     strLines = strLines + """
     ];
-
-    //add academicDomains
-    var academicDomains = {
-        "cqvip.com":1,
-        "springer.com":1,
-        "aps.org":1,
-        "royalsocietypublishing.org":1,
-        "link.springer.com":1,
-        "iop.org":1,
-        "nature.com":1,
-        "sciencedirect.com":1,
-    }
 
     var safeDomains = {
         '10010.com' : 1,
@@ -439,11 +493,6 @@ function FindProxyForURL(url, host) {
         'tw.yahoo.com' : 1,
         'youtube.com' : 1,
         'zaobao.com.sg' : 1,
-        //add mine
-        'github.com':1,
-        'github.io':1,
-        'wikipedia.org':1,
-        'zh.wikipedia.org':1,
     };
 
     // see https://github.com/clowwindy/ChinaDNS/blob/master/chinadns/dnsrelay.py
@@ -586,12 +635,17 @@ function FindProxyForURL(url, host) {
         return 'DIRECT';
     }
 
-    if (testDomain(host, safeDomains, true)) {
+    //add costomSafeDomains
+    if (doMatch(url,costomSafeDomains)) {
         return 'DIRECT';
     }
 
-    //add academicDomains
-    if (testDomain(host, academicDomains, true)) {
+    //add costomDangerDomains
+    if (doMatch(url,costomDangerDomains)) {
+        return 'proxy';
+    }
+
+    if (testDomain(host, safeDomains, true)) {
         return 'DIRECT';
     }
 
@@ -613,7 +667,7 @@ function FindProxyForURL(url, host) {
     }
 
     var intIp = convertAddress(strIp);
-    if (match(intIp, list)) {
+    if (match(intIp, cn_ip_list)) {
         return 'DIRECT';
     }
 
