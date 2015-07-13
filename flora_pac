@@ -9,7 +9,7 @@ import argparse
 import math
 import socket
 import struct
-
+from datetime import datetime
 
 def ip2long(ip):
     packedIP = socket.inet_aton(ip)
@@ -33,6 +33,7 @@ def generate_pac(proxy):
     strLines = """// a fork of @leaskh's Flora_Pac by @gregist
 // many lines were borrowed from http://www.oschina.net/code/snippet_860270_26154
 // feel free to modify & distribute
+// updated at %s
 
 function getDomain(url) {
     if (url.substring(0, 8) == 'file:///') {
@@ -100,9 +101,9 @@ function FindProxyForURL(url, host) {
         'github.com',
         'github.io',
         'wikipedia.org',
-    ]
-
-    var cn_ip_list = ["""
+    ];
+    
+    var cn_ip_list = ["""% str(datetime.now())
     intLines = 0
     for ip,mask,_ in results:
         if intLines > 0:
@@ -748,7 +749,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Generate proxy auto-config rules.")
     parser.add_argument('-x', '--proxy',
                         dest    = 'proxy',
-                        default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;',
+                        # default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;',
+                        # default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;',
+                        default = 'SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;',
                         nargs   = '?',
                         help    = "Proxy Server, examples: "
                                   "SOCKS5 127.0.0.1:8964; "
