@@ -750,8 +750,8 @@ if __name__ == '__main__':
     parser.add_argument('-x', '--proxy',
                         dest    = 'proxy',
                         # default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;',
-                        # default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;',
-                        default = 'SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;',
+                        default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;',
+                        # default = 'SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;',
                         nargs   = '?',
                         help    = "Proxy Server, examples: "
                                   "SOCKS5 127.0.0.1:8964; "
