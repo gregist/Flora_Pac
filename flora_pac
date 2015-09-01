@@ -16,9 +16,9 @@ def ip2long(ip):
     return struct.unpack("!L", packedIP)[0]
 
 
-def generate_pac(proxy):
+def generate_pac(name,proxy):
     results  = fetch_ip_data()
-    pacfile  = 'flora_pac.pac'
+    pacfile  = 'flora_pac_'+str(name)+'.pac'
     rfile    = open(pacfile, 'w')
     results.insert(0, (ip2long('127.0.0.1'),   ip2long('255.0.0.0'),   0))
     results.insert(1, (ip2long('10.0.0.0'),    ip2long('255.0.0.0'),   0))
@@ -87,20 +87,27 @@ function FindProxyForURL(url, host) {
         "springer.com",
         "aps.org",
         "royalsocietypublishing.org",
-        "springer.com",
         "iop.org",
         "nature.com",
         "sciencedirect.com",
         //local network
         "192.168.*",
+        "127.0.0.1",
+        "localhost",
+        //chinese
+        "letv.com",
+        "letvcdn.com",
     ];
 
     //costomDangerDomains
     var costomDangerDomains = [
         //just to be sure
-        'github.com',
-        'github.io',
-        'wikipedia.org',
+        '*github*',
+        '*wikipedia.org',
+        '*phncdn.com',
+        '*pornhub.com',
+        '*empornium.me',
+        '*bbc.com',
     ];
     
     var cn_ip_list = ["""% str(datetime.now())
@@ -681,7 +688,7 @@ function FindProxyForURL(url, host) {
     rfile.close()
     print ("Rules: %d items.\n"
            "Usage: Use the newly created %s as your web browser's automatic "
-           "PAC(Proxy auto-config) file."%(intLines, pacfile))
+           "PAC(Proxy auto-config) file.\n\n"%(intLines, pacfile))
 
 
 def pac_server(port):
@@ -749,9 +756,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Generate proxy auto-config rules.")
     parser.add_argument('-x', '--proxy',
                         dest    = 'proxy',
-                        # default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;',
                         default = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;',
-                        # default = 'SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;',
                         nargs   = '?',
                         help    = "Proxy Server, examples: "
                                   "SOCKS5 127.0.0.1:8964; "
@@ -763,5 +768,12 @@ if __name__ == '__main__':
                         nargs   = '?',
                         help    = "Pac Server Port [OPTIONAL], examples: 8970")
     args = parser.parse_args()
-    generate_pac(args.proxy)
-    pac_server(int(args.port))
+
+    # generate_pac(args.proxy)
+    # pac_server(int(args.port))
+    proxys = {}
+    proxys['ss'] = 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;'
+    proxys['ps'] = 'SOCKS5 127.0.0.1:7071; SOCKS 127.0.0.1:7071;'
+    proxys['lt'] = 'PROXY 127.0.0.1:8787;'
+    for k,v in proxys.items():
+        generate_pac(k,v)
