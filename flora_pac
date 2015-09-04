@@ -97,17 +97,15 @@ function FindProxyForURL(url, host) {
         //chinese
         "letv.com",
         "letvcdn.com",
+        //other
+        'opennicproject.org'
     ];
 
     //costomDangerDomains
     var costomDangerDomains = [
         //just to be sure
-        '*github*',
-        '*wikipedia.org',
-        '*phncdn.com',
-        '*pornhub.com',
-        '*empornium.me',
-        '*bbc.com',
+        'wikipedia.org',
+        'bbc.com',
     ];
     
     var cn_ip_list = ["""% str(datetime.now())
