@@ -1,6 +1,6 @@
-#Flora_Pac
+#flora_pac
 
-This script generates a PAC file that helps you circumvent the [GFW](https://en.wikipedia.org/wiki/Great_Firewall).
+This script generates a PAC file that helps circumventing the [GFW](https://en.wikipedia.org/wiki/Great_Firewall).
 
 ## Mechanism
 
@@ -15,9 +15,8 @@ This script generates a PAC file that helps you circumvent the [GFW](https://en.
 
 ## Usage
 
-`./flora_pac -x [PROXY]`  
-e.g.  
-`./flora_pac -x 'SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080;'`
+`./flora_pac`  
+Use `flora_pac_lt.pac` for lantern, or `flora_pac_ss.pac` for shadowsocks.
 
 ## License
 
