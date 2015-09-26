@@ -1,0 +1,22 @@
+//DIRECT
+//academic full-text
+cqvip.com
+springer.com
+aps.org
+royalsocietypublishing.org
+iop.org
+nature.com
+sciencedirect.com
+//local network
+192.168.*
+127.0.0.1
+localhost
+//chinese
+letv.com
+letvcdn.com
+//other
+opennicproject.org
+
+//PROXY
+wikipedia.org
+bbc.com
