@@ -16,16 +16,22 @@ with open ('ds.txt','r') as f:
 
 dil=''
 prl=''
+ptd=''
 flag=0
+flag2=0
 
 for i in range(len(ds)):
     di=ds[i].replace('\n','')
     if di=='//PROXY':
         flag=1
-    if flag==0 and di!='':
+    if di=='//TRAFFIC':
+        flag2=1
+    if flag==0 and di!='' and flag2==0:
         dil+='        \''+di+'\',\n'
-    if flag==1 and di!='':
+    if flag==1 and di!='' and flag2==0:
         prl+='        \''+di+'\',\n'
+    if di!='' and flag2==1:
+        ptd+='        \''+di+'\',\n'
 
 def ip2long(ip):
     packedIP = socket.inet_aton(ip)
@@ -95,6 +101,8 @@ function doMatch(url, patternList) {
 }
 
 function FindProxyForURL(url, host) {
+    var proxyTwoDomains = [
+%s    ];
 
     var costomSafeDomains = [
 %s    ];
@@ -102,7 +110,7 @@ function FindProxyForURL(url, host) {
     var costomDangerDomains = [
 %s    ];
 
-    var cn_ip_list = ["""%(str(datetime.now()),dil,prl)
+    var cn_ip_list = ["""%(str(datetime.now()),ptd,dil,prl)
     intLines = 0
     for ip,mask,_ in results:
         if intLines > 0:
@@ -577,6 +585,7 @@ function FindProxyForURL(url, host) {
     };
 
     var proxy = '%s';
+    var proxyTwo = 'PROXY 45.63.56.173:25;';
 
     function convertAddress(ipchars) {
         var bytes = ipchars.split('.');
@@ -639,6 +648,11 @@ function FindProxyForURL(url, host) {
     //add costomSafeDomains
     if (doMatch(url,costomSafeDomains)) {
         return 'DIRECT';
+    }
+
+    //add proxyTwoDomains
+    if (doMatch(url,proxyTwoDomains)) {
+        return proxyTwo;
     }
 
     //add costomDangerDomains

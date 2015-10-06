@@ -17,3 +17,7 @@ opennicproject.org
 //PROXY
 wikipedia.org
 bbc.com
+
+//TRAFFIC
+googlevideo.com
+phncdn.com
