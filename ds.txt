@@ -21,3 +21,4 @@ bbc.com
 //TRAFFIC
 googlevideo.com
 phncdn.com
+wikimedia.org
