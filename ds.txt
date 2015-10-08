@@ -22,3 +22,6 @@ bbc.com
 googlevideo.com
 phncdn.com
 wikimedia.org
+i.imgur.com
+rncdn3.com
+media.tumblr.com
